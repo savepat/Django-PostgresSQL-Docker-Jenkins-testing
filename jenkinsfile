@@ -13,12 +13,4 @@ pipeline {
         }
 
     }
-    post {
-        success {
-            slackSend channel: '#jenkins', color: 'good', message: "Build successful!"
-        }
-        failure {
-            slackSend channel: '#jenkins', color: 'danger', message: "Build failed!"
-        }
-    }
 }
