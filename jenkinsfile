@@ -4,32 +4,28 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                
+                // Checkout source code from Git
                 checkout scm
             }
         }
         
         stage('Build') {
             steps {
+                // Install Python and Django dependencies
+                sh 'python -m pip install -r requirements.txt'
                 
-                bat 'python -m pip install -r requirements.txt'
+                // Run Django migrations
+                sh 'python manage.py migrate'
                 
-                
-                bat 'python manage.py migrate'
-                
-               
-                bat 'python manage.py collectstatic --no-input'
+                // Collect static files
+                sh 'python manage.py collectstatic --no-input'
             }
         }
         
         stage('Run Tests') {
-            environment {
-               
-                PATH = "C:\\Python\\Scripts;C:\\Python"
-            }
             steps {
-                
-                bat 'python manage.py test'
+                // Run tests using Django's test runner
+                sh 'python manage.py test'
             }
         }
     }
