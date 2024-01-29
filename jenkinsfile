@@ -1,20 +1,35 @@
 pipeline {
     agent any
+
     stages {
         stage('Checkout') {
             steps {
+                
                 checkout scm
             }
         }
+        
         stage('Build') {
             steps {
-                script {
-                    if (isUnix()) {
-                        sh 'make build'
-                    } else {
-                        bat 'start /B make build'
-                    }
-                }
+                
+                bat 'python -m pip install -r requirements.txt'
+                
+                
+                bat 'python manage.py migrate'
+                
+               
+                bat 'python manage.py collectstatic --no-input'
+            }
+        }
+        
+        stage('Run Tests') {
+            environment {
+               
+                PATH = "C:\\Python\\Scripts;C:\\Python"
+            }
+            steps {
+                
+                bat 'python manage.py test'
             }
         }
     }
