@@ -9,7 +9,11 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh 'make build'
+                    if (isUnix()) {
+                        sh 'make build'
+                    } else {
+                        bat 'start /B make build'
+                    }
                 }
             }
         }
