@@ -12,20 +12,20 @@ pipeline {
         stage('Build') {
             steps {
                 // Install Python and Django dependencies
-                sh 'python -m pip install -r requirements.txt'
+                bat 'python -m pip install -r requirements.txt'
                 
                 // Run Django migrations
-                sh 'python manage.py migrate'
+                bat 'python manage.py migrate'
                 
                 // Collect static files
-                sh 'python manage.py collectstatic --no-input'
+                bat 'python manage.py collectstatic --no-input'
             }
         }
         
         stage('Run Tests') {
             steps {
                 // Run tests using Django's test runner
-                sh 'python manage.py test'
+                bat 'python manage.py test'
             }
         }
     }
