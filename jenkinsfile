@@ -8,9 +8,14 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'make build'
+                script {
+                    if (isUnix()) {
+                        sh 'make build'
+                    } else {
+                        bat 'make build'
+                    }
+                }
             }
         }
-
     }
 }
