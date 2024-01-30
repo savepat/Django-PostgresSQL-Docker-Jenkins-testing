@@ -1,6 +1,7 @@
 pipeline {
-    agent any
-
+    agent {
+        label 'python'
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -9,6 +10,12 @@ pipeline {
             }
         }
         
+        stage('Run Python Script') {
+            steps {
+                sh 'python3 script.py'
+            }
+        }
+    
         stage('Build') {
             steps {
                 // Install Python and Django dependencies
